@@ -1,40 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../comp/CustomToggleButton.dart';
 import '../comp/RaisedGradientButton.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreen createState() => new _HomeScreen();
+}
+
+class _HomeScreen extends State<HomeScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+        key: _scaffoldKey,
         child: Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/mudrahomelogo.png', height: 40),
-            // Add your logo asset
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            BannerSection(),
-            SizedBox(height: 10),
-            LoanServicesSection(),
-            SizedBox(height: 20),
-            ForItProsSection(),
-            SizedBox(height: 20),
-            OurChoiceSection(),
-            SizedBox(height: 20),
-            FooterSection(),
-          ],
-        ),
-      ),
-    ));
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    // Handle the click event
+
+                    _scaffoldKey.currentState?.openDrawer();
+                    print("Menu icon clicked");
+                    // You can navigate or perform any action you need here
+                  },
+                  child: Image.asset('assets/menu.png', height: 40),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 70.0),
+                  // Adjust the left padding as needed
+                  child: Image.asset('assets/mudrahomelogo.png', height: 40),
+                ),
+                // Add your logo asset
+              ],
+            ),
+          ),
+          drawer: CustomDrawer(),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                BannerSection(),
+                SizedBox(height: 10),
+                LoanServicesSection(),
+                SizedBox(height: 20),
+                ForItProsSection(),
+                SizedBox(height: 20),
+                OurChoiceSection(),
+                SizedBox(height: 20),
+                FooterSection(),
+              ],
+            ),
+          ),
+        ));
   }
 }
 
@@ -282,7 +304,7 @@ class _ForItProsSectionState extends State<ForItProsSection> {
 class OurChoiceSection extends StatelessWidget {
   final List<Map<String, dynamic>> choices = [
     {
-      'icon':'https://mudrahome.com/assets/frontend/img/vast-choice.png',
+      'icon': 'https://mudrahome.com/assets/frontend/img/vast-choice.png',
       'title': 'VAST CHOICE',
       'description':
           'We have partnership with almost all banks and NBFCs, You can choose from a complete bouquet of financial products offered by them.\t'
@@ -296,7 +318,8 @@ class OurChoiceSection extends StatelessWidget {
     {
       'icon': 'https://mudrahome.com/assets/frontend/img/safe&secure.png',
       'title': 'DATA PRIVACY',
-      'description': 'You data is completely safe with us and we implement best market data security practices to keep your data secure.'
+      'description':
+          'You data is completely safe with us and we implement best market data security practices to keep your data secure.'
     },
     {
       'icon': 'https://mudrahome.com/assets/frontend/img/everyone.png',
@@ -315,22 +338,22 @@ class OurChoiceSection extends StatelessWidget {
         children: [
           Text('Check You Maximun Loan Eligibilty',
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-          Card(
-            elevation: 4,
-            color: Color(0xFFE0000D),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),
-              child: Text(
-                'Check Now',
-                style: GoogleFonts.urbanist(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+          RaisedGradientButton(
+            child: Text(
+              'Next',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
             ),
+            gradient: LinearGradient(
+              colors: <Color>[Color(0xFF971616), Color(0xFFE0000D)],
+            ),
+            width: 200,
+            height: 40,
+            onPressed: () {
+              Navigator.pushNamed(context, '/patner');
+            },
           ),
           Row(
             children: [
@@ -341,13 +364,14 @@ class OurChoiceSection extends StatelessWidget {
                       color: Color(0xFF00009F))),
               Expanded(
                   child: Divider(
-                    indent: 5,
-                    endIndent: 100,
-                    color: Color(0xFF00009F),
-                  )),
+                indent: 5,
+                endIndent: 100,
+                color: Color(0xFF00009F),
+              )),
             ],
           ),
-          Text('We make personal finance convenient, transparent and very simple',
+          Text(
+              'We make personal finance convenient, transparent and very simple',
               style: GoogleFonts.urbanist(
                   fontSize: 14,
                   fontWeight: FontWeight.normal,
@@ -357,16 +381,22 @@ class OurChoiceSection extends StatelessWidget {
               color: Colors.white,
               child: ListTile(
                 leading: Image.network(choice['icon']),
-                title: Text(choice['title'],style: GoogleFonts.urbanist(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),),
-                subtitle: Text(choice['description'],style: GoogleFonts.urbanist(
-                  fontSize: 14,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.black,
-                ),),
+                title: Text(
+                  choice['title'],
+                  style: GoogleFonts.urbanist(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                subtitle: Text(
+                  choice['description'],
+                  style: GoogleFonts.urbanist(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black,
+                  ),
+                ),
               ),
             );
           }).toList(),
@@ -383,10 +413,133 @@ class FooterSection extends StatelessWidget {
       padding: EdgeInsets.all(20),
       child: Column(
         children: [
-         Image.network('https://mudrahome.com/assets/frontend/img/app-banner/bottom-banner-img.png'),
+          Image.network(
+              'https://mudrahome.com/assets/frontend/img/app-banner/bottom-banner-img.png'),
           Text(
             'All © Copyright Mudra Home Inc. All Rights Reserved.',
             style: TextStyle(color: Colors.black, fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomDrawer extends StatelessWidget {
+  const CustomDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundImage: NetworkImage(
+                          'https://via.placeholder.com/150'), // Your profile image here
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Test,',
+                      style: TextStyle(color: Colors.black, fontSize: 18),
+                    ),
+                  ],
+                ),
+                // Text(
+                //   '+91 7689998917',
+                //   style: TextStyle(color: Colors.black, fontSize: 10),
+                // ),
+              ],
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text('HOME'),
+            onTap: () {
+              // Handle home navigation
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('MY ACCOUNT'),
+            onTap: () {
+              // Handle my account navigation
+            },
+          ),
+          ExpansionTile(
+            leading: Icon(Icons.account_balance_wallet),
+            title: Text('LOAN PRODUCTS'),
+            children: [
+              ListTile(
+                title: Text('Home Loan'),
+                onTap: () {
+                  // Handle Home Loan navigation
+                },
+              ),
+              ListTile(
+                title: Text('Loan Balance Transfer'),
+                onTap: () {
+                  // Handle Loan Balance Transfer navigation
+                },
+              ),
+              ListTile(
+                title: Text('Loan Against Property'),
+                onTap: () {
+                  // Handle Loan Against Property navigation
+                },
+              ),
+              ListTile(
+                title: Text('Personal Loan'),
+                onTap: () {
+                  // Handle Personal Loan navigation
+                },
+              ),
+              ListTile(
+                title: Text('Business Loan'),
+                onTap: () {
+                  // Handle Business Loan navigation
+                },
+              ),
+            ],
+          ),
+          ListTile(
+            leading: Icon(Icons.calculate),
+            title: Text('EMI CALCULATOR'),
+            onTap: () {
+              // Handle EMI Calculator navigation
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.info),
+            title: Text('ABOUT US'),
+            onTap: () {
+              // Handle About Us navigation
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.contact_mail),
+            title: Text('CONTACT US'),
+            onTap: () {
+              // Handle Contact Us navigation
+              Navigator.pushNamed(context, '/contact-us');
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('LOG OUT'),
+            onTap: () {
+              // Handle Log Out navigation
+            },
           ),
         ],
       ),

@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../comp/custom_button.dart';
 import '../viewmodel/login_viewmodel.dart';
+
 class LoginScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -26,8 +27,8 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
           ),
-          Flexible(
-            child: Stack(
+          SingleChildScrollView(
+            child: Column(
               children: <Widget>[
                 Align(
                   alignment: Alignment.topCenter,
@@ -59,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                               style: GoogleFonts.urbanist(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
-                                color: Color(050041),
+                                color: Color(0xFF050041),
                               ),
                             ),
                             Padding(
@@ -124,7 +125,6 @@ class LoginScreen extends StatelessWidget {
                                 viewModel.errorMessage!,
                                 style: TextStyle(color: Colors.red),
                               ),
-
                             const SizedBox(height: 20),
                             CustomButton(
                               text: 'Login',
@@ -138,12 +138,12 @@ class LoginScreen extends StatelessWidget {
                                     );
                                     return;
                                   }
-                                  viewModel.loginByEmail(context,email, password);
+                                  viewModel.loginByEmail(context, email, password);
                                 }
                               },
                               width: 380, // Adjust the width as needed
                             ),
-                            const Spacer(),
+                            Spacer(),
                             TextButton(
                               child: Text(
                                 "Skip",

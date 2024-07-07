@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/splash.png'), // Add your logo here
+            Image.asset('assets/mudrahome_icon.png',width: 300), // Add your logo here
             SizedBox(height: 20),
           ],
         ),

@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class ApiService {
   late Dio _dio;
@@ -66,8 +68,7 @@ class ApiService {
     } else if (error.type == DioExceptionType.receiveTimeout) {
       throw Exception('Receive Timeout Exception');
     } else if (error.type == DioExceptionType.badResponse) {
-      throw Exception(
-          'Received invalid status code: ${error.response?.statusCode}');
+      throw Exception('Received invalid status code: ${error.response?.statusCode}');
     } else if (error.type == DioExceptionType.unknown) {
       throw Exception('Connection failed due to internet connection');
     } else {

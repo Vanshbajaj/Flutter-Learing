@@ -1,21 +1,32 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test_app/viewmodel/login_viewmodel.dart';
 
 import '../comp/CommonProgressIndicator.dart';
+import '../network/models/register_as_patner_entity.dart';
 
+class VerifyAccountScreen extends StatefulWidget {
+  final RegisterAsPartnerData registrationData;
+  final File aadhaarCard;
+  final File panCard;
+  final File check;
 
-class VerifyPhoneScreen extends StatefulWidget {
-  final String data;
-  VerifyPhoneScreen({required this.data});
+  VerifyAccountScreen(
+      {required this.registrationData,
+      required this.aadhaarCard,
+      required this.panCard,
+      required this.check});
 
   @override
-  _VerifyPhoneScreenState createState() => _VerifyPhoneScreenState();
+  _VerifyAccountScreenState createState() => _VerifyAccountScreenState();
 }
 
-class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
+class _VerifyAccountScreenState extends State<VerifyAccountScreen> {
   final List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
-  final List<TextEditingController> _controllers = List.generate(4, (index) => TextEditingController());
+  final List<TextEditingController> _controllers =
+      List.generate(4, (index) => TextEditingController());
 
   @override
   void dispose() {
@@ -76,7 +87,7 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
                             ),
                           ),
                           TextSpan(
-                            text: widget.data,
+                            text: widget.registrationData.phoneNumber,
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.black,
@@ -133,8 +144,11 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           // Handle Verify and Login button press
-                          String otp = _controllers.map((controller) => controller.text).join();
-                          viewModel.verifyOtp(context,widget.data,otp);
+                          String otp = _controllers
+                              .map((controller) => controller.text)
+                              .join();
+                          viewModel.verifyForm(
+                              context, otp,widget.aadhaarCard,widget.panCard,widget.check, widget.registrationData);
                         },
                         child: Text('VERIFY AND LOGIN'),
                         style: ElevatedButton.styleFrom(

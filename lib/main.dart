@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test_app/network/models/register_as_patner_entity.dart';
+import 'package:test_app/screens/AssociationPartnerRegistrationScreen.dart';
+import 'package:test_app/screens/AssociationPartnerRegistrationScreen2.dart';
+import 'package:test_app/screens/ContactUs.dart';
 import 'package:test_app/screens/HomePage.dart';
 import 'package:test_app/screens/login_screen.dart';
 import 'package:test_app/screens/splash_screen.dart';
@@ -41,7 +45,19 @@ class MyApp extends StatelessWidget {
             '/verify-phone': (context) => VerifyPhoneScreen(data: 'text',),
             '/forgot-password': (context) => ForgotPasswordScreen(),
             '/reset-password': (context) => ResetPasswordScreen(),
-            '/home': (context) => HomeScreen()
+            '/home': (context) => HomeScreen(),
+            // '/my-account': (context) => MyAccountScreen(), // Create this screen
+            // '/loan-products/home-loan': (context) => HomeLoanScreen(), // Create this screen
+            // '/loan-products/loan-balance-transfer': (context) => LoanBalanceTransferScreen(), // Create this screen
+            // '/loan-products/loan-against-property': (context) => LoanAgainstPropertyScreen(), // Create this screen
+            // '/loan-products/personal-loan': (context) => PersonalLoanScreen(), // Create this screen
+            // '/loan-products/business-loan': (context) => BusinessLoanScreen(), // Create this screen
+            // '/emi-calculator': (context) => EmiCalculatorScreen(), // Create this screen
+            // '/about-us': (context) => AboutUsScreen(), // Create this screen
+             '/contact-us': (context) => ContactUsScreen(), // Create this screen
+            '/patner': (context) => AssociationPartnerRegistrationScreen(),
+            '/patner2': (context) => AssociationPartnerRegistrationScreen2(registrationData:RegisterAsPartnerData()),
+            '/verifyAccount': (context) => AssociationPartnerRegistrationScreen2(registrationData:RegisterAsPartnerData())
           },
         ));
   }
